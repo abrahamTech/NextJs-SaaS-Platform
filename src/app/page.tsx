@@ -138,10 +138,10 @@ export default function Home() {
                   <Image 
                     src='/file-upload-preview.jpg'
                     alt='file upload preview'
-                    width={1419}
-                    height={732}
+                    width={1279}
+                    height={854}
                     quality={100}
-                    className='rounded-md bg-gradient-to-tr from-[#ac9276] to-[#d4c6bd] p-2 sm:p-8 md:p-20 shadow-2xl ring-1 ring-gray-900/10'
+                    className='rounded-md bg-gradient-to-tr from-[#4c8c91] to-[#cae6ef] p-2 sm:p-8 md:p-20 shadow-2xl ring-1 ring-gray-900/10'
                   />
                 </div>
               </div>
