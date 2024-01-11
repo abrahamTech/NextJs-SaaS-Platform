@@ -10,7 +10,7 @@ export default function Home() {
       <MaxWidthWrapper className="mb-12 mt-28 sm:mt-40 flex flex-col items-center justify-center text-center">
         <div className="mx-auto mb-4 flex max-w-fit items-center justify-center space-x-2 overflow-hidden rounded-full border border-gray-200 bg-white px-7 py-2 shadow-md backdrop-blur cursor-pointer transition-all hover:border-gray-300 hover:bg-white/50 ">
           <p className="text-sm font-semibold text-gray-700">
-            Try now PD(<span className="text-indigo-600">IA</span>)!
+            Try now pd(<span className="text-indigo-600">IA</span>)!
           </p>
         </div>
 
@@ -19,7 +19,7 @@ export default function Home() {
         </h1>
 
         <p className="mt-5 max-w-prose text-zinc-700 sm:text-lg">
-          PD(<span className="text-indigo-600">IA</span>) enables you to engage in conversations with any PDF document. Just upload your file and begin posing questions immediately.
+          pd(<span className="text-indigo-600">IA</span>) enables you to engage in conversations with any PDF document. Just upload your file and begin posing questions immediately.
         </p>
 
         <Link 
@@ -76,7 +76,7 @@ export default function Home() {
               Start in <span className="text-indigo-500">minutes</span>
             </h2>
             <p className='mt-4 text-lg text-gray-600'>
-              Interacting with your PDF files is now simpler than ever with PD(<span className="text-indigo-600">IA</span>).
+              Interacting with your PDF files is now simpler than ever with pd(<span className="text-indigo-600">IA</span>).
             </p>
           </div>
         </div>
