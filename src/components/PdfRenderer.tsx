@@ -1,6 +1,6 @@
 "use client"
 
-import { ChevronDown, Loader2 } from "lucide-react";
+import { ChevronDown, ChevronUp, Loader2 } from "lucide-react";
 import {Document, Page, pdfjs} from "react-pdf";
 
 import 'react-pdf/dist/Page/AnnotationLayer.css';
@@ -25,6 +25,7 @@ const PdfRenderer = ({url}: PdfRendererProps) => {
     const {toast} = useToast();
 
     const [numPages, setNumPages ] = useState<number>();
+    const [currPage, setCurrPage] = useState<number>(1);
 
     const { width, ref } = useResizeDetector();
 
@@ -32,8 +33,15 @@ const PdfRenderer = ({url}: PdfRendererProps) => {
         <div className="w-full bg-white rounded-md shadow flex flex-col items-center">
             <div className="h-14 w-full border-b border-zinc-200 flex items-center justify-between px-2">
                 <div className="flex items-center gap-1.5">
-                    <Button variant="ghost" aria-label="previous-page">
-                        <ChevronDown className="h-4 w-4" />
+                    <Button
+                        disabled={currPage <= 1} 
+                        variant="ghost" 
+                        aria-label="previous-page"
+                        onClick={() => {
+                            setCurrPage((prev) => (prev - 1 > 1 ? prev -1 : 1))
+                        }}
+                    >
+                        <ChevronUp className="h-4 w-4" />
                     </Button>
 
                     <div className="flex items-center gap-1.5">
@@ -44,7 +52,17 @@ const PdfRenderer = ({url}: PdfRendererProps) => {
                         </p>
                     </div>
 
-                    <Button variant="ghost" aria-label="next-page">
+                    <Button
+                        disabled={
+                            numPages === undefined ||
+                            currPage === numPages
+                        }
+                        variant="ghost" 
+                        aria-label="next-page"
+                        onClick={() => {
+                            setCurrPage((prev) => (prev + 1 > numPages! ? numPages! : prev + 1))
+                        }}
+                    >
                         <ChevronDown className="h-4 w-4" />
                     </Button>
                 </div>
@@ -69,7 +87,7 @@ const PdfRenderer = ({url}: PdfRendererProps) => {
                             })
                         }}
                     >
-                        <Page width={width ? width : 1} pageNumber={1} />
+                        <Page width={width ? width : 1} pageNumber={currPage} />
                     </Document>
                 </div>
             </div>
