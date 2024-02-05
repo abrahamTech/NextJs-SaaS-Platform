@@ -24,6 +24,8 @@ const PdfRenderer = ({url}: PdfRendererProps) => {
 
     const {toast} = useToast();
 
+    const [numPages, setNumPages ] = useState<number>();
+
     const { width, ref } = useResizeDetector();
 
     return (
@@ -38,9 +40,13 @@ const PdfRenderer = ({url}: PdfRendererProps) => {
                         <Input className="w-12 h-8" />
                         <p className="text-zinc-700 text-sm space-x-1">
                             <span>/</span>
-                            <span>5</span>
+                            <span>{numPages ?? "x"}</span>
                         </p>
                     </div>
+
+                    <Button variant="ghost" aria-label="next-page">
+                        <ChevronDown className="h-4 w-4" />
+                    </Button>
                 </div>
             </div>
 
@@ -54,6 +60,7 @@ const PdfRenderer = ({url}: PdfRendererProps) => {
                                 <Loader2 className="my-24 h-6 w-6 animate-spin"/>
                             </div>
                         }
+                        onLoadSuccess={({numPages}) => setNumPages(numPages)}  
                         onLoadError={() => {
                             toast({
                                 title: "Error loading PDF",
