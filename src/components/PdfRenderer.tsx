@@ -16,6 +16,7 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { cn } from "@/lib/utils";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "./ui/dropdown-menu";
+import SimpleBar from "simplebar-react";
 
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`
 
@@ -123,27 +124,29 @@ const PdfRenderer = ({url}: PdfRendererProps) => {
             </div>
 
             <div className="flex-1 w-full max-h-screen">
-                <div ref={ref}>
-                    <Document 
-                        file={url} 
-                        className="max-h-full"
-                        loading={
-                            <div className="flex justify-center">
-                                <Loader2 className="my-24 h-6 w-6 animate-spin"/>
-                            </div>
-                        }
-                        onLoadSuccess={({numPages}) => setNumPages(numPages)}  
-                        onLoadError={() => {
-                            toast({
-                                title: "Error loading PDF",
-                                description: "Please try again later",
-                                variant: "destructive",
-                            })
-                        }}
-                    >
-                        <Page width={width ? width : 1} pageNumber={currPage} />
-                    </Document>
-                </div>
+                <SimpleBar autoHide={false} className="max-h-[calc(100vh-10rem)]">
+                    <div ref={ref}>
+                        <Document 
+                            file={url} 
+                            className="max-h-full"
+                            loading={
+                                <div className="flex justify-center">
+                                    <Loader2 className="my-24 h-6 w-6 animate-spin"/>
+                                </div>
+                            }
+                            onLoadSuccess={({numPages}) => setNumPages(numPages)}  
+                            onLoadError={() => {
+                                toast({
+                                    title: "Error loading PDF",
+                                    description: "Please try again later",
+                                    variant: "destructive",
+                                })
+                            }}
+                        >
+                            <Page width={width ? width : 1} pageNumber={currPage} scale={scale} />
+                        </Document>
+                    </div>
+                </SimpleBar>
             </div>
         </div>
     )
