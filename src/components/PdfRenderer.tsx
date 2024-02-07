@@ -15,7 +15,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { cn } from "@/lib/utils";
-import { DropdownMenu, DropdownMenuTrigger } from "./ui/dropdown-menu";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "./ui/dropdown-menu";
 
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`
 
@@ -32,6 +32,10 @@ const PdfRenderer = ({url}: PdfRendererProps) => {
     const [numPages, setNumPages ] = useState<number>();
     const [currPage, setCurrPage] = useState<number>(1);
 
+    //Dropdown Menu
+    const [scale, setScale] = useState<number>(1);
+
+    //Page Input Validation
     const CustomPageValidator = z.object({
         page: z.string().refine((num) => Number(num) > 0 && Number(num) <= numPages!),
     })
@@ -104,8 +108,16 @@ const PdfRenderer = ({url}: PdfRendererProps) => {
                         <DropdownMenuTrigger asChild >
                             <Button aria-label="zoom" variant="ghost" className="gap-1.5">
                                 <Search className="h-4 w-4" />
+                                {scale * 100}%<ChevronDown className="h-3 w-3 opacity-50"/>
                             </Button>
                         </DropdownMenuTrigger>
+
+                        <DropdownMenuContent>
+                            <DropdownMenuItem onSelect={() => setScale(1)} >100%</DropdownMenuItem>
+                            <DropdownMenuItem onSelect={() => setScale(1.5)} >150%</DropdownMenuItem>
+                            <DropdownMenuItem onSelect={() => setScale(2)} >200%</DropdownMenuItem>
+                            <DropdownMenuItem onSelect={() => setScale(2.5)} >250%</DropdownMenuItem>
+                        </DropdownMenuContent>
                     </DropdownMenu>
                 </div>
             </div>
