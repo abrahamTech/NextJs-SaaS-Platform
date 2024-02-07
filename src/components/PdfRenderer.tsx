@@ -14,6 +14,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { cn } from "@/lib/utils";
 
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`
 
@@ -69,7 +70,7 @@ const PdfRenderer = ({url}: PdfRendererProps) => {
                     <div className="flex items-center gap-1.5">
                         <Input 
                             {...register("page")}
-                            className="w-12 h-8"
+                            className={cn("w-12 h-8", errors.page && "focus-visible:ring-red-500")}
                             onKeyDown={(e) => {
                                 if(e.key === "Enter") {
                                     handleSubmit(handlePageSubmit)()
