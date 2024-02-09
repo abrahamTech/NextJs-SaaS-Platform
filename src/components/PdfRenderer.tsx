@@ -72,6 +72,7 @@ const PdfRenderer = ({url}: PdfRendererProps) => {
                         aria-label="previous-page"
                         onClick={() => {
                             setCurrPage((prev) => (prev - 1 > 1 ? prev -1 : 1))
+                            setValue("page", String(currPage - 1))
                         }}
                     >
                         <ChevronUp className="h-4 w-4" />
@@ -102,6 +103,7 @@ const PdfRenderer = ({url}: PdfRendererProps) => {
                         aria-label="next-page"
                         onClick={() => {
                             setCurrPage((prev) => (prev + 1 > numPages! ? numPages! : prev + 1))
+                            setValue("page", String(currPage + 1))
                         }}
                     >
                         <ChevronDown className="h-4 w-4" />
