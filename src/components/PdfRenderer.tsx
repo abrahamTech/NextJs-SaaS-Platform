@@ -40,6 +40,11 @@ const PdfRenderer = ({url}: PdfRendererProps) => {
     //Dropdown Menu
     const [scale, setScale] = useState<number>(1);
 
+    //
+    const [renderedScale, setRenderedScale] = useState<number | null>(null);
+    const isLoading = renderedScale !== scale;
+
+
     //Page Input Validation
     const CustomPageValidator = z.object({
         page: z.string().refine((num) => Number(num) > 0 && Number(num) <= numPages!),
@@ -159,7 +164,25 @@ const PdfRenderer = ({url}: PdfRendererProps) => {
                                 })
                             }}
                         >
-                            <Page width={width ? width : 1} pageNumber={currPage} scale={scale} rotate={rotation} />
+                            {isLoading && renderedScale 
+                                ? <Page key={"#" + renderedScale} width={width ? width : 1} pageNumber={currPage} scale={scale} rotate={rotation} />
+                                : null
+                            }
+                            
+                            <Page
+                                key={"#" + scale} 
+                                className={cn(isLoading ? "hidden" : "")} 
+                                width={width ? width : 1} 
+                                pageNumber={currPage} 
+                                scale={scale} 
+                                rotate={rotation} 
+                                loading={
+                                    <div className="flex justify-center">
+                                        <Loader2 className="my-24 h-6 w-6 animate-spin" />
+                                    </div>
+                                }
+                                onRenderSuccess={() => setRenderedScale(scale)}
+                                />
                         </Document>
                     </div>
                 </SimpleBar>
