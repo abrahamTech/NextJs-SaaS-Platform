@@ -8,9 +8,20 @@ interface ChatWrapperProps {
 
 const ChatWrapper = ({fileId}: ChatWrapperProps) => {
 
-    const {} = trpc.getFileUploadStatus.useQuery({
+    const {isLoading} = trpc.getFileUploadStatus.useQuery({
         fileId,
-    })
+    }, {
+        refetchInterval: (query) => query?.state?.data?.status === "SUCCESS" || query?.state?.data?.status === "FAILED" ? false : 500
+    }
+    )
+
+    
+    // if(data?.status === "SUCCESS" || data?.status === "FAILED") {
+    //     return false
+    // } else {
+    //     return 500
+    // }
+    
 
     return (
         <div className="relative min-h-full bg-zinc-50 flex divide-y divide-zinc-200 flex-col justify-between gap-2">
