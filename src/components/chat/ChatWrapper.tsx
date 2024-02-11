@@ -1,6 +1,9 @@
+"use client"
+
 import { trpc } from "@/app/_trpc/client";
 import ChatInput from "./ChatInput";
 import Messages from "./Messages";
+import { Loader2 } from "lucide-react";
 
 interface ChatWrapperProps {
     fileId: string
@@ -8,19 +11,31 @@ interface ChatWrapperProps {
 
 const ChatWrapper = ({fileId}: ChatWrapperProps) => {
 
-    const {isLoading} = trpc.getFileUploadStatus.useQuery({
+    const {data, isLoading} = trpc.getFileUploadStatus.useQuery({
         fileId,
     }, {
+        //Help Link: https://tanstack.com/query/v5/docs/framework/react/guides/migrating-to-v5
+        //Another: https://bluesockets.com/react/the-easiest-guide-on-migrating-to-react-query-v5/       
         refetchInterval: (query) => query?.state?.data?.status === "SUCCESS" || query?.state?.data?.status === "FAILED" ? false : 500
     }
     )
 
-    
-    // if(data?.status === "SUCCESS" || data?.status === "FAILED") {
-    //     return false
-    // } else {
-    //     return 500
-    // }
+    if(isLoading) 
+        return (
+            <div className="relative min-h-full bg-zinc-50 flex divide-y divide-zinc-200 flex-col justify-between gap-2">
+                <div className="flex-1 flex justify-center items-center flex-col mb-28">
+                    <div className="flex flex-col items-center gap-2">
+                        <Loader2 className="h-8 w-8 text-indigo-500 animate-spin" />
+                        <h3 className="font-semibold text-xl">
+                            Loading
+                        </h3>
+                        <p className="text-zinc-500 text-sm">
+                            We&apos;re preparing your PDF.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        )
     
 
     return (
